@@ -1,4 +1,6 @@
-from object import halfAdder
+from object import halfAdder, twoBitIncrementor
 
 ha = halfAdder()
-print(ha.stable(1, 1))
+inc = twoBitIncrementor()
+#print(ha.stable(1, 1))
+print(inc.stable([True, False]))
