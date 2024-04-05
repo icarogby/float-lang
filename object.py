@@ -21,12 +21,12 @@ class halfAdder():
             for sign in self.signsDic:
                 for sensibilitySign in self.signsDic[sign][3]: # For each sensibility sign
                     if self.signsDic[sensibilitySign][2]: # if someone have changed
-                        self.signsDic[sign][1] = True # This sign is not stabilized yet
+                        self.signsDic[sign][1] = False # This sign is not stabilized yet
                         break
             
             # Define all sign as not changed
             for sign in self.signsDic:
                 self.signsDic[sign][2] = False
 
-        return [self.sum, self.carry]
+        return self.signsDic
     
