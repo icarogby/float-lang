@@ -1,0 +1,49 @@
+comp halfAdder(bit aValue, bit bValue) (bit sum, bit cout) {
+   sum = aValue xor bValue;
+   cout = aValue and bValue;
+
+}
+
+comp fullAdder(bit aValue, bit bValue, bit cin) (bit sum, bit cout) {
+   sum = aValue xor bValue xor cin;
+   cout = (aValue and bValue) or (aValue and cin) or (bValue and cim);
+
+}
+
+// 4 bit adder
+comp rippleCarryAdder(bit[4] aValue, bit[4] bValue) (bit[4] sum,bit cout) {
+   bit[4] internalCout;
+
+   A0 is halfAdder(aValue[0], bValue[0]) (sum[0], internalCout[0]);
+   A1 is fullAdder(aValue[1], bValue[1], internalCout[0]) (sum[1], internalCout[1]);
+   A2 is fullAdder(aValue[2], bValue[2], internalCout[1]) (sum[2], internalCout[2]);
+   A3 is fullAdder(aValue[3], bValue[3], internalCout[2]) (sum[3], internalCout[3]);
+
+   carry = internalCarry[3];
+
+}
+
+test rippleCarryAdderTest{
+   bit[4] aValue;
+   bit[4] bValue;
+   bit[4] sum;
+   bit[4] cout;
+
+   RC is rippleCarryAdder(aValue, bValue)(sum, cout);
+
+} <
+   aValue = 0010;
+   bValue = 0011;
+   wait 1u;
+
+   if(sum == 0101) {
+      print “Right value: {sum}.”;
+      
+   } else {
+      print “Erro.”;
+
+   }
+
+   stop;
+
+>
