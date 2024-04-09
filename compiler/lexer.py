@@ -1,4 +1,4 @@
-from lexer import *
+from util import *  # todo: change here
 
 
 class Lexer:
@@ -7,7 +7,6 @@ class Lexer:
         self.currentToken = None
 
         self.splitAndLabelTokens(flooatCode)
-        print(self.tokens)
 
     def splitAndLabelTokens(self, flooatCode: str):
         tempToken = ''
@@ -35,7 +34,5 @@ class Lexer:
                     reading = True
                     tempToken += char
 
-    def getNextToken(self):
-        self.currentToken = self.tokens.pop(0)
-
-        return self.currentToken
+    def getTokens(self):
+        return self.tokens

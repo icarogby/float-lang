@@ -1,8 +1,8 @@
 comp incrementor(bit[2] inValue) (bit carryOut, bit[2] sum) {
     bit carry;
 
-    sum[0] = inValue[0] xor 1;
-    carry = inValue[0] and 1;
+    sum[0] = inValue[0] xor "1";
+    carry = inValue[0] and "1";
 
     sum[1] = inValue[1] xor carry;
     carryOut = inValue[1] and carry;
