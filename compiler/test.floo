@@ -1,1 +1,1 @@
-comp incrementor() (bit carryOut, bit sum) { }
+comp incrementor(bit) (bit carryOut, bit sum) { }
