@@ -5,17 +5,5 @@ symbolAlphabet = ['=', '(', ')', '[', ']', '{', '}', ';', ',']
 ignoredChars = ['\n', '\t', ' ']
 tokenEnds = symbolAlphabet + ignoredChars
 
+tokenLabels = ['keyword', 'id', 'number', 'binary']
 keyWords = ['comp', 'bit', 'and', 'or', 'xor', 'not', 'nand', 'nor', 'xnor']
-
-
-def getLabel(token: str):
-    if token in keyWords:
-        return 'keyword'
-    elif (token[0] in firstLetterIdAlphabet) and (all(i in idAlphabet for i in token[1:])):
-        return 'id'
-    elif all(i in numberAlphabet for i in token):
-        return 'number'
-    elif (token[0] == '\"') and (all(i in ['0', '1'] for i in token[1::-2])) and (token[-1] == '\"'):
-        return 'binary'
-    else:
-        raise Exception(f'Invalid token: {token}')

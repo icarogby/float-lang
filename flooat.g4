@@ -2,9 +2,9 @@ grammar flooat;
 
 init: comp;
 
-comp: 'comp' ID '(' parameters ')' '(' parameters ')' '{' descriptionBlock '}';
+comp: 'comp' ID '(' parameters? ')' '(' parameters? ')' '{' descriptionBlock '}';
 
-parameters: (signDec (',' signDec)*)?; // List of signal declarations
+parameters: signDec (',' signDec)*; // List of signal declarations
 descriptionBlock: ((signDec|signAssign|singDecAssign) ';')*;
 
 signDec: 'bit' ('[' Number ']')? ID;
