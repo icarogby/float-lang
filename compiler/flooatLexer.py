@@ -2,14 +2,21 @@ from util import *  # todo: change here
 
 
 def getLabel(token: str):
-    if token in keyWords:
-        return 'keyword'
-    elif (token[0] in firstLetterIdAlphabet) and (all(i in idAlphabet for i in token[1:])):
-        return 'id'
-    elif all(i in numberAlphabet for i in token):
-        return 'number'
-    elif (token[0] == '\"') and (all(i in ['0', '1'] for i in token[1::-2])) and (token[-1] == '\"'):
-        return 'binary'
+    if token in keyWords: # Check if is a keyword
+        return (token, token)
+
+    elif token in signTypes: # Check if is a sign type
+        return ('signType', token)
+    
+    elif (token[0] in firstLetterIdAlphabet) and (all(i in idAlphabet for i in token[1:])): # Check if is an ID
+        return ('id', token)
+    
+    elif all(i in numberAlphabet for i in token): # Check if is a number
+        return ('number', token)
+    
+    elif (token[0] == '\"') and (all(i in ['0', '1'] for i in token[1::-2])) and (token[-1] == '\"'): # Check if is a binary
+        return ('binary', token)
+    
     else:
         raise Exception(f'Lexical Error: Invalid token: {token}')
     
@@ -30,7 +37,7 @@ class Lexer:
                 if char in tokenEnds:
                     reading = False
 
-                    self.tokens.append((getLabel(tempToken), tempToken))
+                    self.tokens.append(getLabel(tempToken))
                     tempToken = ''
 
                     if char in symbolAlphabet:

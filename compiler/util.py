@@ -6,4 +6,5 @@ ignoredChars = ['\n', '\t', ' ']
 tokenEnds = symbolAlphabet + ignoredChars
 
 tokenLabels = ['keyword', 'id', 'number', 'binary']
-keyWords = ['comp', 'bit', 'and', 'or', 'xor', 'not', 'nand', 'nor', 'xnor']
+keyWords = ['comp', 'and', 'or', 'xor', 'not', 'nand', 'nor', 'xnor']
+signTypes = ['bit']

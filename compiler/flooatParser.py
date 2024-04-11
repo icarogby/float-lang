@@ -9,6 +9,10 @@ class Parser:
         self.expectedTokens = []
         self.SyntaxErrorMsg = f'Syntax error: Expected {list(set(self.expectedTokens))}.\n Found: {self.getCurrentToken()[0]}'
 
+    def parse(self):
+        self.init()
+        return self.pythonCode
+    
     def getCurrentToken(self):
         return self.tokens[self.index]
     
@@ -38,7 +42,7 @@ class Parser:
         self.matchToken('comp')
 
         self.matchToken('id')
-        self.symbolTable.append(self.tokens[self.index][1])
+        self.symbolTable.append(self.tokens[self.index][1]) # todo: change format
         
         self.matchToken('[')
         
