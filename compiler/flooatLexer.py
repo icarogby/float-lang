@@ -41,7 +41,7 @@ class Lexer:
                     tempToken = ''
 
                     if char in symbolAlphabet:
-                        self.tokens.append(('symbol', char))
+                        self.tokens.append((char, char))
                 else:
                     tempToken += char
 
@@ -49,7 +49,7 @@ class Lexer:
                 if char in ignoredChars:
                     continue
                 elif char in symbolAlphabet:
-                    self.tokens.append(('symbol', char))
+                    self.tokens.append((char, char))
                 else:
                     reading = True
                     tempToken += char

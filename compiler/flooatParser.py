@@ -1,16 +1,18 @@
-from util import tokenLabels
-
 class Parser:
     def __init__(self, tokens: list):
         self.tokens = tokens
-        self.symbolTable = []
-        self.pythonCode = ''
         self.index = -1
-        self.expectedTokens = []
-        self.SyntaxErrorMsg = f'Syntax error: Expected {list(set(self.expectedTokens))}.\n Found: {self.getCurrentToken()[0]}'
+        self.tempIndex = 0
+
+        self.tempErrorMsg = ''
+
+        self.pythonCode = ''
 
     def parse(self):
-        self.init()
+        try:
+            self.init()
+        except Exception as e:
+            print(f'Error: {e}')
         return self.pythonCode
     
     def getCurrentToken(self):
@@ -25,16 +27,16 @@ class Parser:
     
     def matchToken(self, token: str):
         if self.getNextToken()[0] != token:
-            self.expectedTokens.append(token)
-            raise Exception(self.SyntaxErrorMsg)
+            raise Exception(f'Syntax error: Expected "{token}"{self.tempErrorMsg}.\n')
         
-    def tryEnter(self, func, firstSet):
-        if self.peekNextToken()[0] in firstSet:
+    def tryEnter(self, func: callable):
+        try:
+            self.tempIndex = self.index
             func()
-        else:
-            for token in firstSet:
-                self.expectedTokens.append(token)
-
+        except Exception as e:
+            self.tempErrorMsg = f' or {func.__name__} ({e})'
+            self.index = self.tempIndex
+            
     def init(self):
         self.comp()
 
@@ -42,41 +44,30 @@ class Parser:
         self.matchToken('comp')
 
         self.matchToken('id')
-        self.symbolTable.append(self.tokens[self.index][1]) # todo: change format
+   
+        self.matchToken('(')
         
-        self.matchToken('[')
-        
-        self.tryEnter(self.parameters(), ['bit'])
+        self.tryEnter(self.parameters)
 
-        self.matchToken(']')
-        
-        if self.getNextToken()[1] != ')':
-            raise Exception(f'{self.tempMsgError}Syntax error: Expected ")"')
-        
-        if self.getNextToken()[1] != '(':
-            raise Exception(f'{self.tempMsgError}Syntax error: Expected "("')
-        
-        if self.peekNextToken()[1] == 'bit':
-            self.parameters()
-        elif self.peekNextToken()[1] != ')':
-            raise Exception(f'{self.tempMsgError}Syntax error: Expected "bit" or ")"')
+        self.matchToken(')')
 
-        if self.getNextToken()[1] != ')':
-            raise Exception(f'{self.tempMsgError}Syntax error: Expected ")"')
-        
-        if self.getNextToken()[1] != '{':
-            raise Exception(f'{self.tempMsgError}Syntax error: Expected "{{"')
+        self.tempErrorMsg = ''
 
-        if self.getNextToken()[1] != '}':
-            raise Exception(f'{self.tempMsgError}Syntax error: Expected "}}"')
+        self.matchToken('(')
+        
+        self.tryEnter(self.parameters)
+
+        self.matchToken(')')
+
+        self.tempErrorMsg = ''
+
+        return True
         
     def parameters(self):
-        if self.getNextToken()[1] != 'bit':
-            raise Exception(f'{self.tempMsgError}Syntax error: Expected "bit"')
+        self.matchToken('signType')
             
-        if self.getNextToken()[0] != 'id':
-            raise Exception(f'{self.tempMsgError}Syntax error: Expected "ID"')
+        self.matchToken('id')
         
-        if self.peekNextToken()[1] == ',':
+        if self.peekNextToken()[0] == ',':
             self.getNextToken()
             self.parameters()
