@@ -1,1 +1,0 @@
-comp incrementor() 65 (bit carryOut, bit sum) { }

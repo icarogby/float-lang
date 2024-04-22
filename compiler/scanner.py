@@ -21,14 +21,13 @@ def getLabel(token: str):
         raise Exception(f'Lexical Error: Invalid token: {token}')
     
 
-class Lexer:
+class Scanner:
     def __init__(self, flooatCode: str):
-        self.tokens = []
-        self.currentToken = None
+        self.tokenStream = []
 
-        self.splitAndLabelTokens(flooatCode)
+        self.makeTokenStream(flooatCode)
 
-    def splitAndLabelTokens(self, flooatCode: str):
+    def makeTokenStream(self, flooatCode: str) -> list[tuple]:
         tempToken = ''
         reading = False
 
@@ -54,5 +53,5 @@ class Lexer:
                     reading = True
                     tempToken += char
 
-    def getTokens(self):
+    def getTokenStream(self):
         return self.tokens
