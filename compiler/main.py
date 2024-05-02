@@ -1,13 +1,16 @@
-from scanner import Scanner
+from tokenizer import Scanner
 
 
 def main():
-    with open('test.ft', 'r') as file:
+    with open('compiler/test.ft', 'r') as file:
         flooatCode = file.read()
 
     scanner = Scanner(flooatCode)
 
-    print('Everything is fine!')
+    for i in scanner.getTokenStream():
+        print(i)
+
+    print('\nEverything is fine!')
 
 
 if __name__ == '__main__':

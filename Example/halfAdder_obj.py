@@ -40,4 +40,3 @@ class halfAdder:
                 self.signalDict[signal].setChanged(False)
 
         return self.signalDict
-    
