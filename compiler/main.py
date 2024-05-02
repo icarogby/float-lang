@@ -1,13 +1,13 @@
-from tokenizer import Scanner
+from tokenizer import Tokenizer
 
 
 def main():
     with open('compiler/test.ft', 'r') as file:
         flooatCode = file.read()
 
-    scanner = Scanner(flooatCode)
+    tokenizer = Tokenizer(flooatCode)
 
-    for i in scanner.getTokenStream():
+    for i in tokenizer.getTokenStream():
         print(i)
 
     print('\nEverything is fine!')

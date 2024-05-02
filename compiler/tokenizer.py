@@ -30,7 +30,7 @@ def getToken(token: str): # todo: make create symbols
         raise Exception(f'Lexical Error: Invalid token: {token}')
     
 
-class Scanner:
+class Tokenizer:
     def __init__(self, flooatCode: str):
         self.tokenStream = [] # List of tokens
 
